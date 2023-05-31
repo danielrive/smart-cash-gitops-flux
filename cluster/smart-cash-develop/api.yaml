@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: smartcash
+  name: smartcash-api
   namespace: flux-system
 spec:
   interval: 10m0s
@@ -9,5 +9,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: smart-cash-gitops-flux
+    name: flux-system
   targetNamespace: develop
+
