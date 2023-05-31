@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: "manifests//api"
+  path: "manifests/api"
   prune: true
   sourceRef:
     kind: GitRepository
