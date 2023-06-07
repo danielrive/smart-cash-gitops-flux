@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: api-container
-        image: 017333715993.dkr.ecr.us-west-2.amazonaws.com/api-smart-cash
+        image: danielrive94/k8-project:print-service
         ports:
-        - containerPort: 5050
+        - containerPort: 8080
          
