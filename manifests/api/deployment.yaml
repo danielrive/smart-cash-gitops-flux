@@ -5,7 +5,7 @@ metadata:
   labels:
     app: api
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: api
@@ -15,8 +15,8 @@ spec:
         app: api
     spec:
       containers:
-      - name: api-container
-        image: danielrive94/k8-project:print-service
+      - name: api_container
+        image: 017333715993.dkr.ecr.us-west-2.amazonaws.com/print_service-smart-cash
         ports:
         - containerPort: 8080
          
