@@ -15,7 +15,7 @@ spec:
         app: api
     spec:
       containers:
-      - name: api_container
+      - name: api-container
         image: 017333715993.dkr.ecr.us-west-2.amazonaws.com/print_service-smart-cash
         ports:
         - containerPort: 8080
