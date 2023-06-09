@@ -4,6 +4,5 @@ kind: Kustomization
 # The namespace is unique to the node, Ericsson would be just 'node'. Other customers should follow the naming convention node-customer
 namespace: develop
 resources:
-- namespace.yaml
 - deployment.yaml
 - service.yaml
