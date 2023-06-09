@@ -8,7 +8,6 @@ spec:
   type: oci
   url: oci://ghcr.io/nginxinc/charts
 
-
 ---
 
 # /flux/boot/traefik/helmrelease.yaml
