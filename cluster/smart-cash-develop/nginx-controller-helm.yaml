@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 1m0s
   type: oci
-  url: oci://ghcr.io/nginxinc/charts/
+  url: oci://ghcr.io/nginxinc/charts
 
 
 ---
