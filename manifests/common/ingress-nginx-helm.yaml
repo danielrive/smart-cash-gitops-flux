@@ -18,5 +18,3 @@ spec:
         name: nginx-ingress
       version: 0.17.1
   interval: 1m0s
-  dependsOn:
-    - name: smartcash-common
