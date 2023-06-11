@@ -5,3 +5,4 @@ kind: Kustomization
 namespace: develop
 resources:
 - namespace.yaml
+- ingress-nginx-helm.yaml
