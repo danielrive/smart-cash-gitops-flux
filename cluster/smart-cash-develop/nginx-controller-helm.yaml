@@ -1,4 +1,3 @@
----
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
@@ -8,20 +7,3 @@ spec:
   interval: 1m0s
   type: oci
   url: oci://ghcr.io/nginxinc/charts
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: nginx-ingress
-  namespace: develop
-spec:
-  chart:
-    spec:
-      chart: nginx-ingress
-      sourceRef:
-      kind: HelmRepository
-        name: nginx-ingress
-      version: 0.17.1
-  interval: 1m0s
-  dependsOn:
-    - name: smartcash-common
