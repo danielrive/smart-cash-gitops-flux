@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: print
+  labels:
+    app: print
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: print
+  template:
+    metadata:
+      labels:
+        app: print
+    spec:
+      containers:
+      - name: print-container
+        image: 017333715993.dkr.ecr.us-west-2.amazonaws.com/print-service-smart-cash
+        ports:
+        - containerPort: 8080
+         
