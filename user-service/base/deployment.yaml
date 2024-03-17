@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-user-service
+  labels:
+    app: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      serviceAccountName: sa-user-service
+      containers:
+      - name: user-service-container
+        image: 658299583140.dkr.ecr.us-west-2.amazonaws.com/user-service-smart-cash
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8181
+        livenessProbe:
+          tcpSocket:
+            port: /health  
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "echo Container started"]
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "echo Container stopping"]
