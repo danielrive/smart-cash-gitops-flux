@@ -1,6 +1,8 @@
-resources:
-  - ../../base
-namespace: develop
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 
-patches:
-  - path: patch-service-account.yaml
+resources:
+#- deployment.yaml
+#- service.yaml
+- service-account.yaml
+#- ingress.yaml
