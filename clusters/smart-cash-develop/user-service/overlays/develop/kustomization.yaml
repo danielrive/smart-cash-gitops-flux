@@ -1,7 +1,7 @@
 resources:
   - ../../base
-  
+
 namespace: develop
 
-patches:
-  - path: patch-service-account.yaml
+patchesStrategicMerge:
+  - patch-service-account.yaml
