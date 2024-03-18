@@ -22,7 +22,7 @@ spec:
         ports:
         - containerPort: 8181
         livenessProbe:
-          tcpSocket:
+          httpGet:
             port: /health  
           initialDelaySeconds: 5
           periodSeconds: 10
