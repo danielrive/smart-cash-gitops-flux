@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 - namespaces.yaml
-- storage-class-aws-ebs.yaml
+#- storage-class-aws-ebs.yaml
 #- helm-nginx-ingress.yaml
 #- helm-prometheus.yaml
 #- crd-cert-manager.yaml
