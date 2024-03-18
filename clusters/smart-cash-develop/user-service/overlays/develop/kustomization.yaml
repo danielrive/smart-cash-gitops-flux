@@ -1,5 +1,5 @@
 resources:
-  - ./clusters/smart-cash-develop/user-service/base
+  - ../../base
 namespace: develop
 
 patches:
