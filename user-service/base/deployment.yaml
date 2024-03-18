@@ -23,7 +23,8 @@ spec:
         - containerPort: 8181
         livenessProbe:
           httpGet:
-            port: /health  
+            port: 8181  
+            path: /health  
           initialDelaySeconds: 5
           periodSeconds: 10
         lifecycle:
