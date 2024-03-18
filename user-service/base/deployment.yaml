@@ -17,10 +17,10 @@ spec:
       serviceAccountName: sa-user-service
       containers:
       - name: user-service-container
-        image: 658299583140.dkr.ecr.us-west-2.amazonaws.com/user-service-smart-cash
+        image: service-image
         imagePullPolicy: Always
         ports:
-        - containerPort: 8181
+        - containerPort: 8182
         livenessProbe:
           httpGet:
             port: 8181  
