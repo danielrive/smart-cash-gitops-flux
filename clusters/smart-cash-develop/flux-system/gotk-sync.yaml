@@ -20,7 +20,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./clusters/smart-cash-develop
+  path: ./clusters/smart-cash-develop"
   prune: true
   sourceRef:
     kind: GitRepository
