@@ -2,8 +2,9 @@ resources:
   - ../../base
 namespace: develop
 images:
-  - name: user-image
+  - name: service-image
     newName: 658299583140.dkr.ecr.us-west-2.amazonaws.com/user-service-smart-cash
-    newTag: develop-b4d62e
+    newTag: develop
+
 patches:
   - path: patch-service-account.yaml
