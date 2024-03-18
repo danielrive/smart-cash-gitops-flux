@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-expenses-service
+  labels:
+    app: expenses-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expenses-service
+  template:
+    metadata:
+      labels:
+        app: expenses-service
+    spec:
+      serviceAccountName: sa-expenses-service
+      containers:
+      - name: expenses-service-container
+        image: service-image
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8182
+        livenessProbe:
+          httpGet:
+            port: 8181  
+            path: /health  
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "echo Container started"]
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "echo Container stopping"]
