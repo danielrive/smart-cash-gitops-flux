@@ -20,7 +20,7 @@ spec:
         image: service-image
         imagePullPolicy: Always
         ports:
-        - containerPort: 8182
+        - containerPort: 8282
         livenessProbe:
           httpGet:
             port: 8282  
