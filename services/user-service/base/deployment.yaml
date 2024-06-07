@@ -16,16 +16,14 @@ spec:
     spec:
       serviceAccountName: sa-user-service
       securityContext:
-        allowPrivilegeEscalation: false
         runAsNonRoot: false
-        readOnlyRootFilesystem: true
       containers:
       - name: user-container
         image: service-image
         imagePullPolicy: Always
-      #  securityContext:
-      #    runAsNonRoot: false
-      #    readOnlyRootFilesystem: true
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
         ports:
         - containerPort: 8181
         livenessProbe:
