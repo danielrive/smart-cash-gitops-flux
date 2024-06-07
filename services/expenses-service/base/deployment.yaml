@@ -17,6 +17,7 @@ spec:
       serviceAccountName: sa-expenses-service
       securityContext:
         runAsNonRoot: true
+        runAsUser: 1000
       containers:
       - name: expenses-container
         image: service-image
