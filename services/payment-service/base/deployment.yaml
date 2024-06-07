@@ -16,7 +16,7 @@ spec:
     spec:
       serviceAccountName: sa-payment-service
       securityContext:
-        runAsNonRoot: false
+        runAsNonRoot: true
       containers:
       - name: payment-container
         image: service-image
