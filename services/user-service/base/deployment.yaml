@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-user
+  labels:
+    app: user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      serviceAccountName: sa-user-service
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: false
+        eadOnlyRootFilesystem: true
+      containers:
+      - name: user-container
+        image: service-image
+        imagePullPolicy: Always
+      #  securityContext:
+      #    runAsNonRoot: false
+      #    readOnlyRootFilesystem: true
+        ports:
+        - containerPort: 8181
+        livenessProbe:
+          httpGet:
+            port: 8181  
+            path: /health  
+          initialDelaySeconds: 1
+          periodSeconds: 10
