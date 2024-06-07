@@ -17,6 +17,7 @@ spec:
       serviceAccountName: sa-bank-service
       securityContext:
         runAsNonRoot: true
+        runAsUser: 1000
       containers:
       - name: bank-container
         image: service-image
