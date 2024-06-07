@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-expenses
+  labels:
+    app: expenses
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expenses
+  template:
+    metadata:
+      labels:
+        app: expenses
+    spec:
+      serviceAccountName: sa-expenses-service
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: false
+        eadOnlyRootFilesystem: true
+      containers:
+      - name: expenses-container
+        image: service-image
+        imagePullPolicy: Always
+      #  securityContext:
+      #    runAsNonRoot: false
+      #    readOnlyRootFilesystem: true
+        ports:
+        - containerPort: 8282
+        livenessProbe:
+          httpGet:
+            port: 8282  
+            path: /health  
+          initialDelaySeconds: 1
+          periodSeconds: 10
