@@ -16,16 +16,14 @@ spec:
     spec:
       serviceAccountName: sa-bank-service
       securityContext:
-        allowPrivilegeEscalation: false
         runAsNonRoot: false
-        readOnlyRootFilesystem: true
       containers:
       - name: bank-container
         image: service-image
         imagePullPolicy: Always
-      #  securityContext:
-      #    runAsNonRoot: false
-      #    readOnlyRootFilesystem: true
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
         ports:
         - containerPort: 8282
         livenessProbe:
