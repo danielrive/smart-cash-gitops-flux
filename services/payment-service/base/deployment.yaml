@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-payment
+  labels:
+    app: payment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment
+  template:
+    metadata:
+      labels:
+        app: payment
+    spec:
+      serviceAccountName: sa-payment-service
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: false
+        eadOnlyRootFilesystem: true
+      containers:
+      - name: payment-container
+        image: service-image
+        imagePullPolicy: Always
+      #  securityContext:
+      #    runAsNonRoot: false
+      #    readOnlyRootFilesystem: true
+        ports:
+        - containerPort: 8383
+        livenessProbe:
+          httpGet:
+            port: 8383  
+            path: /health  
+          initialDelaySeconds: 1
+          periodSeconds: 10
