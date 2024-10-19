@@ -1,0 +1,88 @@
+#########################################################
+######## Trust in AWS ECR registry only for workloads 
+
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: trustregistry
+spec:
+  crd:
+    spec:
+      names:
+        kind: TrustRegistry
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            registry:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package trustregistry 
+
+        import future.keywords
+
+        violation[{"msg": msg, "details": {"images MUST come from trusted registry"}}] {
+              some container in input.review.object.spec.containers
+              not startswith(container.image, input.parameters.registry)
+              msg := sprintf("Image '%v' comes from untrusted registry", [container.image])
+  
+        }
+
+---
+
+#########################################
+######## Container security 
+
+# Deny privileged mode
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: containerprivilegedmode
+spec:
+  crd:
+    spec:
+      names:
+        kind: ContainerPrivilegedMode
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package containerprivilegedmode 
+
+        import future.keywords
+
+        violation[{"msg": msg, "details": {"Container can run in privileged mode, please remove this from manifest"}}] {
+              some container in input.review.object.spec.containers
+              not container.securityContext.allowPrivilegeEscalation == false
+              msg := sprintf("Container '%v' allow privilege escalation", [container.name])
+        }
+
+---
+
+#########################################
+######## Container security 
+
+# Deny Run as a root
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: containernonroot
+spec:
+  crd:
+    spec:
+      names:
+        kind: ContainerNonRoot
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package containernonroot 
+
+        import future.keywords
+
+        violation[{"msg": msg}] {
+              input.review.object.kind == "Pod"
+              not input.review.object.spec.securityContext.runAsNonRoot
+              msg := "Pod does not enforce running as non-root"
+          }
+
