@@ -4,7 +4,6 @@ namespace: develop
 images:
   - name: service-image
     newName: 658299583140.dkr.ecr.us-west-2.amazonaws.com/frontend-service-smart-cash # {"$imagepolicy": "develop:img-upd-frontend:name"}
-    newTag: develop # {"$imagepolicy": "develop:frontend:tag"}
-
+    newTag: develop-1729350566 # {"$imagepolicy": "develop:frontend:tag"}
 patches:
   - path: patch-deployment.yaml
