@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-frontend
+spec:
+  template:
+    spec:
+      containers:
+      - name: frontend-container
+        env:
+        - name:  API_URL
+          value: api.develop.smartcash.danielrive.site
+        volumeMounts:
+          - name: nginx-temp
+            mountPath: /tmp/
+        livenessProbe:
+          httpGet:
+            port: 9090  
+            path: / 
+          initialDelaySeconds: 1
+          periodSeconds: 10
+      volumes:
+        - name: nginx-temp
+          emptyDir: {}
