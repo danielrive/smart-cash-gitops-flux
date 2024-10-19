@@ -1,0 +1,47 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: frontend
+spec:
+  image: 658299583140.dkr.ecr.us-west-2.amazonaws.com/frontend-service-smart-cash
+  interval: 5m0s
+  timeout: 1m0s
+  provider: aws
+
+---
+
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: frontend
+spec:
+  imageRepositoryRef:
+    name: frontend
+  filterTags:
+    pattern: '^develop-(?P<timestamp>\d+)$'
+    extract: '$timestamp'
+  policy:
+    numerical:
+      order: asc
+
+---
+
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: img-upd-frontend
+spec:
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        email: fluxcdbot@smartcash.com
+        name: fluxcdbot
+    push:
+      branch: develop
+  update:
+    path: services/frontend-service/overlays/develop/kustomization.yaml
