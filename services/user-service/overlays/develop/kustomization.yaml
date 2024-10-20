@@ -1,0 +1,10 @@
+resources:
+  - ../../base
+namespace: develop
+images:
+  - name: service-image
+    newName: 658299583140.dkr.ecr.us-west-2.amazonaws.com/user-service-smart-cash # {"$imagepolicy": "develop:img-upd-user:name"}
+    newTag: develop # {"$imagepolicy": "develop:user:tag"}
+
+patches:
+  - path: patch-deployment.yaml
