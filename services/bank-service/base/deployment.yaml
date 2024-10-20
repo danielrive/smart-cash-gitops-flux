@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-bank
+  labels:
+    app: bank
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: bank
+  template:
+    metadata:
+      labels:
+        app: bank
+        tier: backend
+    spec:
+      serviceAccountName: sa-bank-service
+      enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10003
+        runAsGroup: 30001
+      containers:
+      - name: bank-container
+        image: service-image
+        imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+        resources:
+          requests:
+            memory: "50Mi"   ###### VALIDATE THESE WERE RANDOM NUMBERS TO TEST
+          limits:
+            memory: "100Mi"  ###### VALIDATE THESE WERE RANDOM NUMBERS TO TEST
+        ports:
+        - containerPort: 8585
+        livenessProbe:
+          httpGet:
+            port: 8585  
+            path: /health  
+          initialDelaySeconds: 1
+          periodSeconds: 10
