@@ -4,7 +4,6 @@ namespace: develop
 images:
   - name: service-image
     newName: 658299583140.dkr.ecr.us-west-2.amazonaws.com/expenses-service-smart-cash # {"$imagepolicy": "develop:img-upd-expenses:name"}
-    newTag: develop # {"$imagepolicy": "develop:expenses:tag"}
-
+    newTag: develop-1729432773 # {"$imagepolicy": "develop:expenses:tag"}
 patches:
   - path: patch-deployment.yaml
