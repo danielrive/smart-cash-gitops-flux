@@ -22,8 +22,8 @@ spec:
         - name: SERVICE_NAME
           value: payment-orchestrator
         - name: EXPENSES_SERVICE_URL
-          value: http://expenses-service.develop.svc.cluster.local:8282
+          value: http://expenses.develop.svc.cluster.local:8282
         - name: BANK_SERVICE_URL
-          value: http://bank-service.develop.svc.cluster.local:8585
+          value: http://bank.develop.svc.cluster.local:8585
         - name: PAYMENT_SERVICE_URL
-          value: http://payment-service.develop.svc.cluster.local:8989
+          value: http://payment.develop.svc.cluster.local:8989
