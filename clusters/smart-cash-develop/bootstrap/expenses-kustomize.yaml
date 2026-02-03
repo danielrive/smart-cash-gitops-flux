@@ -1,0 +1,19 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: expenses-service
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: "services/expenses-service/overlays/develop"
+  prune: true
+  images:
+  - name: service-image
+    newName: 658299583140.dkr.ecr.us-west-2.amazonaws.com/expenses-service-smart-cash # {"$imagepolicy": "develop:img-upd-expenses:name"}
+    newTag: develop # {"$imagepolicy": "develop:expenses:tag"}
+  postBuild:
+    substitute:
+      APP_VERSION: "none" # {"$imagepolicy": "develop:expenses:tag"}
