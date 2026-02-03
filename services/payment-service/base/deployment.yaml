@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-payment
+  labels:
+    app: payment
+    tier: backend
+    version: ${APP_VERSION:=none}
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: payment
+  template:
+    metadata:
+      labels:
+        app: payment
+        tier: backend
+        version: ${APP_VERSION:=none}
+    spec:
+      serviceAccountName: sa-payment-service
+      topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              app: payment
+          maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone 
+          whenUnsatisfiable: ScheduleAnyway
+      enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10003
+        runAsGroup: 30001
+      containers:
+      - name: payment-container
+        image: service-image
+        imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+        resources:
+          requests:
+            memory: "10Mi"   ###### VALIDATE THESE WERE RANDOM NUMBERS TO TEST
+            cpu: "1m"
+          limits:
+            memory: "10Mi"  ###### VALIDATE THESE WERE RANDOM NUMBERS TO TEST
+        ports:
+        - containerPort: 8989
+        livenessProbe:
+          httpGet:
+            port: 8989  
+            path: /payment/health  
+          initialDelaySeconds: 1
+          periodSeconds: 10
