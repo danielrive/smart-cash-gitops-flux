@@ -13,7 +13,7 @@ spec:
   images:
   - name: service-image
     newName: 658299583140.dkr.ecr.us-west-2.amazonaws.com/bank-service-smart-cash # {"$imagepolicy": "develop:img-upd-bank:name"}
-    newTag: develop # {"$imagepolicy": "develop:bank:tag"}
+    newTag: develop-1769989586 # {"$imagepolicy": "develop:bank:tag"}
   postBuild:
     substitute:
-      APP_VERSION: "none" # {"$imagepolicy": "develop:bank:tag"}
+      APP_VERSION: "develop-1769989586" # {"$imagepolicy": "develop:bank:tag"}
