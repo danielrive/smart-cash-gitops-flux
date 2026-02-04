@@ -4,7 +4,8 @@ metadata:
   name: develop
   labels:
     project: smart-cash
-    
+    istio.io/dataplane-mode: ambient
+
 ---
 
 apiVersion: v1
