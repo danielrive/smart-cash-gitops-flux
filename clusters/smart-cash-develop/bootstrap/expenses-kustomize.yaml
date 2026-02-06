@@ -13,7 +13,7 @@ spec:
   images:
   - name: service-image
     newName: 658299583140.dkr.ecr.us-west-2.amazonaws.com/expenses-service-smart-cash # {"$imagepolicy": "develop:img-upd-expenses:name"}
-    newTag: develop # {"$imagepolicy": "develop:expenses:tag"}
+    newTag: develop-1770302006 # {"$imagepolicy": "develop:expenses:tag"}
   postBuild:
     substitute:
-      APP_VERSION: "none" # {"$imagepolicy": "develop:expenses:tag"}
+      APP_VERSION: "develop-1770302006" # {"$imagepolicy": "develop:expenses:tag"}
