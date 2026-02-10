@@ -13,7 +13,7 @@ spec:
   images:
   - name: service-image
     newName: 658299583140.dkr.ecr.us-west-2.amazonaws.com/payment-orchestrator-service-smart-cash # {"$imagepolicy": "develop:img-upd-payment-orchestrator:name"}
-    newTag: develop-1770349549 # {"$imagepolicy": "develop:payment-orchestrator:tag"}
+    newTag: develop-1770693300 # {"$imagepolicy": "develop:payment-orchestrator:tag"}
   postBuild:
     substitute:
-      APP_VERSION: "develop-1770349549" # {"$imagepolicy": "develop:payment-orchestrator:tag"}
+      APP_VERSION: "develop-1770693300" # {"$imagepolicy": "develop:payment-orchestrator:tag"}
