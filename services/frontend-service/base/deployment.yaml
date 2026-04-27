@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-frontend
+  labels:
+    app: frontend
+    tier: frontend
+    version: ${APP_VERSION:=none}
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+        tier: frontend
+        version: ${APP_VERSION:=none}
+    spec:
+      serviceAccountName: sa-frontend-service
+      topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              app: frontend
+          maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone 
+          whenUnsatisfiable: ScheduleAnyway
+      enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10003
+        runAsGroup: 30001
+      volumes:
+      - name: jwt-secret
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: jwt-secret
+      containers:
+      - name: frontend-container
+        image: service-image
+        imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+        #resources:
+        #  requests:
+        #    memory: "10Mi"   ###### VALIDATE THESE WERE RANDOM NUMBERS TO TEST
+        #    cpu: "1m"
+        #  limits:
+        #    memory: "10Mi"  ###### VALIDATE THESE WERE RANDOM NUMBERS TO TEST
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        - name: jwt-secret
+          mountPath: /mnt/secrets-store
+          readOnly: true
+        livenessProbe:
+          httpGet:
+            port: 9090  
+            path: /index.html  
+          initialDelaySeconds: 1
+          periodSeconds: 10
