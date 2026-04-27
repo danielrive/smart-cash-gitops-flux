@@ -1,0 +1,19 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: frontend-service
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: "services/frontend-service/overlays/develop"
+  prune: true
+  images:
+  - name: service-image
+    newName: 658299583140.dkr.ecr.us-west-2.amazonaws.com/frontend-service-smart-cash # {"$imagepolicy": "develop:img-upd-frontend:name"}
+    newTag: develop # {"$imagepolicy": "develop:frontend:tag"}
+  postBuild:
+    substitute:
+      APP_VERSION: "none" # {"$imagepolicy": "develop:frontend:tag"}
